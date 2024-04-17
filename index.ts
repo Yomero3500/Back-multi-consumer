@@ -4,15 +4,15 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 async function getEvent() {
-    const url = process.env.URL || "amqp://michi:michi123@52.205.249.137";
+    const url = process.env.URL || "amqp://guest:guest@34.232.159.80";
     const conn = await amqp.connect(url);
     const channel = await conn.createChannel();
 
-    const exchange = 'Maikol';
+    const exchange = 'amq.topic';
 
-    await channel.assertExchange(exchange, 'direct', {durable: true});
+    await channel.assertExchange(exchange, 'topic', {durable: true});
 
-    const queueName = 'initial';
+    const queueName = 'cola';
     const queue = await channel.assertQueue(queueName, {exclusive: false});
     await channel.bindQueue(queue.queue, exchange, '12345');
 
@@ -22,11 +22,14 @@ async function getEvent() {
         if(mensaje !== null){
             console.log(`Message received: ${mensaje}`);
             try {
-                const id = Number(mensaje.content);
-                const response = await axios.post('https://hexagonal-2.onrender.com/registrations',{mensaje});
-                console.log(response);
+                const data = JSON.parse(mensaje.content.toString());
+                const Vrms = {tipo:"Vrms", valor: data.Vrms, correo_cliente: "jrmoch2@gmail.com"  }
+                const response = await axios.post('http://localhost:3001/lectura',{tipo:"Vrms", valor: data.Vrms, correo_cliente:"jrmoch2@gmail.com"});
+                const response1 = await axios.post('http://localhost:3001/lectura',{tipo:"Irms", valor: data.Irms, correo_cliente:"jrmoch2@gmail.com"});
+                const response2 = await axios.post('http://localhost:3001/lectura',{tipo:"Power", valor: data.Power, correo_cliente:"jrmoch2@gmail.com"});
+                const response3 = await axios.post('http://localhost:3001/lectura',{tipo:"kWh", valor: data.kWh, correo_cliente:"jrmoch2@gmail.com"});               
             } catch (error) {
-                console.log("Error sending to API");   
+                console.log("Error sending to API:", error);   
             }
         }
     }, {noAck:true});
