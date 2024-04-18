@@ -23,6 +23,8 @@ async function getEvent() {
             console.log(`Message received: ${mensaje}`);
             try {
                 const data = JSON.parse(mensaje.content.toString());
+                console.log(data);
+                
                 const Vrms = {tipo:"Vrms", valor: data.Vrms, correo_cliente: "jrmoch2@gmail.com"  }
                 const response = await axios.post('https://back-multi-secundaria.onrender.com/lectura',{tipo:"Vrms", valor: data.Vrms, correo_cliente:"jrmoch2@gmail.com"});
                 const response1 = await axios.post('https://back-multi-secundaria.onrender.com/lectura',{tipo:"Irms", valor: data.Irms, correo_cliente:"jrmoch2@gmail.com"});
