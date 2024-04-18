@@ -24,10 +24,10 @@ async function getEvent() {
             try {
                 const data = JSON.parse(mensaje.content.toString());
                 const Vrms = {tipo:"Vrms", valor: data.Vrms, correo_cliente: "jrmoch2@gmail.com"  }
-                const response = await axios.post('http://localhost:3001/lectura',{tipo:"Vrms", valor: data.Vrms, correo_cliente:"jrmoch2@gmail.com"});
-                const response1 = await axios.post('http://localhost:3001/lectura',{tipo:"Irms", valor: data.Irms, correo_cliente:"jrmoch2@gmail.com"});
-                const response2 = await axios.post('http://localhost:3001/lectura',{tipo:"Power", valor: data.Power, correo_cliente:"jrmoch2@gmail.com"});
-                const response3 = await axios.post('http://localhost:3001/lectura',{tipo:"kWh", valor: data.kWh, correo_cliente:"jrmoch2@gmail.com"});               
+                const response = await axios.post('https://back-multi-secundaria.onrender.com/lectura',{tipo:"Vrms", valor: data.Vrms, correo_cliente:"jrmoch2@gmail.com"});
+                const response1 = await axios.post('https://back-multi-secundaria.onrender.com/lectura',{tipo:"Irms", valor: data.Irms, correo_cliente:"jrmoch2@gmail.com"});
+                const response2 = await axios.post('https://back-multi-secundaria.onrender.com/lectura',{tipo:"Power", valor: data.Power, correo_cliente:"jrmoch2@gmail.com"});
+                const response3 = await axios.post('https://back-multi-secundaria.onrender.com/lectura',{tipo:"kWh", valor: data.kWh, correo_cliente:"jrmoch2@gmail.com"});               
             } catch (error) {
                 console.log("Error sending to API:", error);   
             }
