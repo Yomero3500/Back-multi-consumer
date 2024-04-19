@@ -32,6 +32,6 @@ async function getEvent() {
                 console.log("Error sending to API:", error);   
             }
         }
-    }, {noAck:true});
+    }, {noAck:false});
 }
 getEvent().catch(console.error);
