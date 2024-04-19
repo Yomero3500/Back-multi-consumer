@@ -20,7 +20,7 @@ async function getEvent() {
 
     channel.consume(queue.queue, async(mensaje)=>{
         if(mensaje !== null){
-            console.log(`Message received: ${mensaje}`);
+            console.log(`Message received: ${mensaje.content.toString}`);
             try {
                 const data = JSON.parse(mensaje.content.toString());
                 const Vrms = {tipo:"Vrms", valor: data.Vrms, correo_cliente: "jrmoch2@gmail.com"  }
